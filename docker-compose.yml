@@ -8,6 +8,8 @@ services:
       - "8080:80"
     volumes:
       - ./src:/var/www/html
+      - ./includes:/var/www/html/includes
+      - ./public:/var/www/html/public
     depends_on:
       - db
 

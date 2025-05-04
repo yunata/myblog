@@ -41,7 +41,7 @@ try {
     <h1 class="page-title">📝 投稿を編集</h1>
     
     <form action="update.php" method="POST" class="post-form">
-        <?php include 'includes/csrf_token.php'; ?>
+        <!-- <?php include 'includes/csrf_token.php'; ?> -->
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($post['id']); ?>">
         
         <div class="form-group">

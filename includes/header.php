@@ -1,3 +1,9 @@
+<?php
+// header.phpの先頭に以下を追加
+if (!function_exists('isLoggedIn')) {
+    require_once __DIR__ . '/auth.php';
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

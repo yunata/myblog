@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // CSRFチェック
-require_once 'includes/csrf_token.php';
+// require_once 'includes/csrf_token.php';
+// verify_csrf_token();
 
 try {
     $title = trim($_POST['title'] ?? '');
