@@ -1,5 +1,5 @@
 <?php
-// header.phpの先頭に以下を追加
+// 必要に応じて認証機能を読み込む
 if (!function_exists('isLoggedIn')) {
     require_once __DIR__ . '/auth.php';
 }
@@ -10,7 +10,7 @@ if (!function_exists('isLoggedIn')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($pageTitle ?? 'ブログ'); ?></title>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <header class="site-header">
@@ -20,12 +20,12 @@ if (!function_exists('isLoggedIn')) {
             </div>
             <div class="nav-menu">
                 <?php if (isLoggedIn()): ?>
-                    <a href="/index.php">ホーム</a>
-                    <a href="/new.php">新規投稿</a>
-                    <a href="/logout.php">ログアウト</a>
+                    <a href="/">ホーム</a>
+                    <a href="/new">新規投稿</a>
+                    <a href="/logout">ログアウト</a>
                 <?php else: ?>
-                    <a href="/login.php">ログイン</a>
-                    <a href="/register.php">新規登録</a>
+                    <a href="/login">ログイン</a>
+                    <a href="/register">新規登録</a>
                 <?php endif; ?>
             </div>
         </nav>
@@ -40,5 +40,6 @@ if (!function_exists('isLoggedIn')) {
             unset($_SESSION['flash_type']);
         }
         ?>
+    </div>
 </body>
 </html> 

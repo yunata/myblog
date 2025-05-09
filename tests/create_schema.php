@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/database.php';
+require_once __DIR__ . '/../app/includes/database.php';
 
 // テスト用データベース接続情報を上書き
 class TestDatabase extends Database {

@@ -1,20 +1,25 @@
 <?php
-require_once 'includes/session.php';
-require_once 'includes/auth.php';
+require_once INCLUDES_DIR . '/auth.php';
+require_once INCLUDES_DIR . '/csrf_token.php';
 
-// 認証チェック
-checkAuth();
+// 認証チェック - ログインしていない場合はログインページにリダイレクト
+if (!isLoggedIn()) {
+    $_SESSION['flash_message'] = 'ログインが必要です。';
+    $_SESSION['flash_type'] = 'warning';
+    header('Location: /login');
+    exit;
+}
 
 // ヘッダー部分の読み込み
 $pageTitle = "新規投稿";
-include 'includes/header.php';
+include INCLUDES_DIR . '/header.php';
 ?>
 
 <main class="container">
     <h1 class="page-title">📝 新規投稿フォーム</h1>
     
-    <form action="create.php" method="POST" class="post-form" novalidate>
-        <?php include 'includes/csrf_token.php'; ?>
+    <form action="/create" method="POST" class="post-form" novalidate>
+        <?php csrf_token_field(); ?>
         
         <div class="form-group">
             <label for="title" class="required">タイトル:</label>
@@ -31,7 +36,7 @@ include 'includes/header.php';
             <label for="body" class="required">本文:</label>
             <textarea id="body" 
                       name="body" 
-                      rows="5" 
+                      rows="10" 
                       required 
                       class="form-control"
                       maxlength="5000"><?php echo htmlspecialchars($_POST['body'] ?? ''); ?></textarea>
@@ -39,9 +44,9 @@ include 'includes/header.php';
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">投稿する</button>
-            <a href="index.php" class="btn btn-secondary">戻る</a>
+            <a href="/" class="btn btn-secondary">戻る</a>
         </div>
     </form>
 </main>
 
-<?php include 'includes/footer.php'; ?>
+<?php include INCLUDES_DIR . '/footer.php'; ?> 

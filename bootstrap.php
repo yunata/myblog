@@ -1,0 +1,40 @@
+<?php
+// アプリケーションのルートディレクトリを定義
+if (!defined('APP_ROOT')) {
+    define('APP_ROOT', __DIR__);
+}
+
+// 共通関数・クラスのディレクトリを定義
+if (!defined('INCLUDES_DIR')) {
+    define('INCLUDES_DIR', APP_ROOT . '/app/includes');
+}
+
+// デバッグ設定
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Composerのオートローダーを読み込む
+require_once APP_ROOT . '/vendor/autoload.php';
+
+// .envファイルから環境設定を読み込む
+$dotenv = Dotenv\Dotenv::createImmutable(APP_ROOT);
+$dotenv->safeLoad(); // .envファイルが存在しない場合でもエラーにならない
+
+// 環境設定
+define('APP_ENV', getenv('APP_ENV') ?: 'development');
+define('APP_DEBUG', filter_var(getenv('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN) ?: true);
+define('APP_URL', getenv('APP_URL') ?: 'http://localhost:8080');
+
+// デバッグ設定
+if (APP_DEBUG) {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+} else {
+    ini_set('display_errors', 0);
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+}
+
+// セッション開始
+require_once INCLUDES_DIR . '/session.php'; 

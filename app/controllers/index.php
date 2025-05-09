@@ -1,10 +1,9 @@
 <?php
-require_once 'includes/session.php';
-require_once 'includes/auth.php';
-require_once 'includes/database.php';
+require_once INCLUDES_DIR . '/auth.php';
+require_once INCLUDES_DIR . '/database.php';
 
 $pageTitle = "ブログ投稿一覧";
-include 'includes/header.php';
+include INCLUDES_DIR . '/header.php';
 
 try {
     $pdo = Database::getInstance()->getConnection();
@@ -44,7 +43,7 @@ try {
     <div class="posts-header">
         <h1 class="page-title">📝 投稿一覧</h1>
         <?php if (isLoggedIn()): ?>
-            <a href="new.php" class="btn btn-primary">＋ 新しい投稿を書く</a>
+            <a href="new" class="btn btn-primary">＋ 新しい投稿を書く</a>
         <?php endif; ?>
     </div>
 
@@ -79,11 +78,11 @@ try {
 
                     <?php if (isLoggedIn() && $post['user_id'] === getCurrentUserId()): ?>
                         <footer class="post-actions">
-                            <a href="edit.php?id=<?php echo $post['id']; ?>" 
+                            <a href="edit?id=<?php echo $post['id']; ?>" 
                                class="btn btn-secondary btn-sm">
                                 編集
                             </a>
-                            <a href="delete.php?id=<?php echo $post['id']; ?>" 
+                            <a href="delete?id=<?php echo $post['id']; ?>" 
                                class="btn btn-danger btn-sm"
                                onclick="return confirm('この投稿を削除してもよろしいですか？');">
                                 削除
@@ -107,4 +106,4 @@ try {
     <?php endif; ?>
 </main>
 
-<?php include 'includes/footer.php'; ?>
+<?php include INCLUDES_DIR . '/footer.php'; ?> 

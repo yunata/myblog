@@ -1,22 +1,19 @@
 <?php
-ob_start();
-
-require_once 'includes/session.php';
-require_once 'includes/database.php';
-require_once 'includes/auth.php';
-require_once 'includes/csrf_token.php';
+require_once INCLUDES_DIR . '/auth.php';
+require_once INCLUDES_DIR . '/database.php';
+require_once INCLUDES_DIR . '/csrf_token.php';
 
 // POSTリクエストのみ許可
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     $_SESSION['flash_message'] = '不正なメソッドです。';
     $_SESSION['flash_type'] = 'danger';
-    header('Location: register.php');
+    header('Location: /register');
     exit;
 }
 
-// CSRFチェック
-require_once 'includes/csrf_token.php';
+// CSRFトークンを検証
+verify_csrf_token();
 
 try {
     $username = trim($_POST['username'] ?? '');
@@ -76,12 +73,12 @@ try {
     $_SESSION['flash_message'] = 'ユーザー登録が完了しました。';
     $_SESSION['flash_type'] = 'success';
     
-    header('Location: index.php');
+    header('Location: /');
     exit;
     
 } catch (Exception $e) {
     $_SESSION['flash_message'] = $e->getMessage();
     $_SESSION['flash_type'] = 'danger';
-    header('Location: register.php');
+    header('Location: /register');
     exit;
-}
+} 

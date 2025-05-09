@@ -1,23 +1,22 @@
 <?php
-require_once 'includes/session.php';
-require_once 'includes/database.php';
-require_once 'includes/csrf_token.php';
-require_once 'includes/auth.php';
+// セッションが既に開始されていることを確認
+require_once INCLUDES_DIR . '/auth.php';
+require_once INCLUDES_DIR . '/csrf_token.php';
 
 // すでにログインしている場合はindexにリダイレクト
-if (isset($_SESSION['user_id'])) {
-    header('Location: index.php');
+if (isLoggedIn()) {
+    header('Location: /');
     exit;
 }
 
 $pageTitle = "新規ユーザー登録";
-include 'includes/header.php';
+include INCLUDES_DIR . '/header.php';
 ?>
 
 <main class="container">
     <h1 class="page-title">新規ユーザー登録</h1>
     
-    <form action="register_process.php" method="POST" class="post-form">
+    <form action="/register_process" method="POST" class="auth-form">
         <?php csrf_token_field(); ?>
         
         <div class="form-group">
@@ -65,9 +64,9 @@ include 'includes/header.php';
         
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">登録する</button>
-            <a href="login.php" class="btn btn-secondary">ログインに戻る</a>
+            <a href="/login" class="btn btn-secondary">ログインに戻る</a>
         </div>
     </form>
 </main>
 
-<?php include 'includes/footer.php'; ?>
+<?php include INCLUDES_DIR . '/footer.php'; ?> 

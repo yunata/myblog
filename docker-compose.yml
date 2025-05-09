@@ -2,16 +2,24 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: myblog-web
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html
-      - ./includes:/var/www/html/includes
-      - ./public:/var/www/html/public
+      - ./:/var/www/html:cached
+    user: "www-data:www-data"
     depends_on:
       - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=blog
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - APP_ENV=development
+      - APP_DEBUG=true
 
   db:
     image: mysql:8.0

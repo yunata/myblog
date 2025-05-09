@@ -4,10 +4,11 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = 'db';
-        $db   = 'blog';
-        $user = 'user';
-        $pass = 'password';
+        // 環境設定から接続情報を取得（環境変数またはconfigファイル）
+        $host = getenv('DB_HOST') ?: 'db';
+        $db   = getenv('DB_NAME') ?: 'blog';
+        $user = getenv('DB_USER') ?: 'user';
+        $pass = getenv('DB_PASSWORD') ?: 'password';
 
         try {
             $this->pdo = new PDO(
